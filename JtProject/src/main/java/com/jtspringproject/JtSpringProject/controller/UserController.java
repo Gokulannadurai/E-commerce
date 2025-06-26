@@ -115,17 +115,12 @@ public class UserController{
 	}
 
 	@GetMapping("/profileDisplay")
-	public String profileDisplay(Model model, HttpServletRequest request) {
-		
+	public String profileDisplay(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.getUserByUsername(username);
 	
 		if (user != null) {
-			model.addAttribute("userid", user.getId());
-			model.addAttribute("username", user.getUsername());
-			model.addAttribute("email", user.getEmail());
-			model.addAttribute("password", user.getPassword()); 
-			model.addAttribute("address", user.getAddress());
+			model.addAttribute("user", user);
 	    } else {
 	    	model.addAttribute("msg", "User not found");
 	    } 
