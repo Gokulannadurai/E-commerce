@@ -92,22 +92,27 @@ public class UserController{
 		return mView;
 	}
 	
-	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
+	@PostMapping("/newuserregister")
 	public ModelAndView newUseRegister(@ModelAttribute User user)
 	{
-		// Check if username already exists in database
+		long startTime = System.currentTimeMillis();
+		
 		boolean exists = this.userService.checkUserExists(user.getUsername());
 
 		if(!exists) {
-			System.out.println(user.getEmail());
 			user.setRole("ROLE_NORMAL");
 			this.userService.addUser(user);
+			
+			long endTime = System.currentTimeMillis();
+			System.out.println("[PERFORMANCE] newUseRegister (Success): " + (endTime - startTime) + "ms");
 
-			System.out.println("New user created: " + user.getUsername());
 			ModelAndView mView = new ModelAndView("userLogin");
+			mView.addObject("msg", "User registered successfully! Please login.");
 			return mView;
 		} else {
-			System.out.println("New user not created - username taken: " + user.getUsername());
+			long endTime = System.currentTimeMillis();
+			System.out.println("[PERFORMANCE] newUseRegister (Username Taken): " + (endTime - startTime) + "ms");
+
 			ModelAndView mView = new ModelAndView("register");
 			mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
 			return mView;
