@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.dao;
+package com.jtspringproject.dao;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jtspringproject.JtSpringProject.models.Category;
-import com.jtspringproject.JtSpringProject.models.Product;
+import com.jtspringproject.models.Category;
+import com.jtspringproject.models.Product;
 
 @Repository
 public class productDao {
@@ -22,7 +22,7 @@ public class productDao {
 	
 	@Transactional
 	public List<Product> getProducts(){
-		return this.sessionFactory.getCurrentSession().createQuery("from PRODUCT").list();
+		return this.sessionFactory.getCurrentSession().createQuery("from Product").list();
 	}
 	
 	@Transactional
@@ -36,8 +36,9 @@ public class productDao {
 		return this.sessionFactory.getCurrentSession().get(Product.class, id);
 	}
 
+	@Transactional
 	public Product updateProduct(Product product){
-		this.sessionFactory.getCurrentSession().update(String.valueOf(Product.class),product);
+		this.sessionFactory.getCurrentSession().update(product);
 		return product;
 	}
 	@Transactional

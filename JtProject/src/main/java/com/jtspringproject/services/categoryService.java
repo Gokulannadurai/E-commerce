@@ -1,14 +1,12 @@
-package com.jtspringproject.JtSpringProject.services;
+package com.jtspringproject.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jtspringproject.JtSpringProject.dao.categoryDao;
-import com.jtspringproject.JtSpringProject.models.Category;
-
-import net.bytebuddy.dynamic.DynamicType.Builder.InnerTypeDefinition;
+import com.jtspringproject.dao.categoryDao;
+import com.jtspringproject.models.Category;
 
 @Service
 public class categoryService {

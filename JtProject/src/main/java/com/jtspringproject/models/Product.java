@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.models;
+package com.jtspringproject.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-@Entity(name="PRODUCT")
+@Entity
 public class Product {
 	@Id
 	@Column(name = "product_id")
@@ -97,10 +97,5 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
-	
 	
 }
