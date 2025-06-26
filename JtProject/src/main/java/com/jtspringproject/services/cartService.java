@@ -1,8 +1,8 @@
-package com.jtspringproject.JtSpringProject.services;
+package com.jtspringproject.services;
 
-import com.jtspringproject.JtSpringProject.dao.cartDao;
-import com.jtspringproject.JtSpringProject.models.Cart;
-import com.jtspringproject.JtSpringProject.models.Category;
+import com.jtspringproject.dao.cartDao;
+import com.jtspringproject.models.Cart;
+import com.jtspringproject.models.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,6 @@ public class cartService {
         return cartDao.addCart(cart);
     }
 
-    //    public Cart getCart(int id)
-//    {
-//        return cartDao.getCart(id);
-//    }
     public List<Cart> getCarts() {
         return this.cartDao.getCarts();
     }

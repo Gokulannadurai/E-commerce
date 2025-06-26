@@ -1,14 +1,15 @@
-package com.jtspringproject.JtSpringProject.services;
+package com.jtspringproject.services;
 
-import com.jtspringproject.JtSpringProject.models.*;
+import com.jtspringproject.models.*;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.jtspringproject.JtSpringProject.dao.userDao;
-import com.jtspringproject.JtSpringProject.models.User;
+import com.jtspringproject.dao.userDao;
+import com.jtspringproject.models.User;
+import com.jtspringproject.exceptions.ResourceNotFoundException;
 
 @Service
 public class userService {
@@ -23,8 +24,8 @@ public class userService {
 		try {
 			return this.userDao.saveUser(user);
 		} catch (DataIntegrityViolationException e) {
-			// handle unique constraint violation, e.g., by throwing a custom exception
-			throw new RuntimeException("Add user error");
+			// Translating a generic data exception to a more specific, application-level one.
+			throw new IllegalArgumentException("User '" + user.getUsername() + "' already exists.");
 		}
 	}
 	
@@ -37,6 +38,14 @@ public class userService {
 	}
 
 	public User getUserByUsername(String username) {
-	        return userDao.getUserByUsername(username);
-	    }
+		User user = userDao.getUserByUsername(username);
+		if (user == null) {
+			throw new ResourceNotFoundException("User not found with username: " + username);
+		}
+		return user;
+	}
+	
+	public User updateUser(User user) {
+		return this.userDao.updateUser(user);
+	}
 }

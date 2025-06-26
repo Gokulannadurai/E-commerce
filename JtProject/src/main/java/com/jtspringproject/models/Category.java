@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.models;
+package com.jtspringproject.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="CATEGORY")
+@Entity
 public class Category {
 	@Id
 	@Column(name = "category_id")

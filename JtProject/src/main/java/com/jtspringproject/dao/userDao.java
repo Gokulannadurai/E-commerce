@@ -1,9 +1,8 @@
-package com.jtspringproject.JtSpringProject.dao;
+package com.jtspringproject.dao;
 
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.sound.midi.Soundbank;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jtspringproject.JtSpringProject.models.User;
+import com.jtspringproject.models.User;
 
 
 @Repository
@@ -26,7 +25,7 @@ public class userDao {
    @Transactional
     public List<User> getAllUser() {
         Session session = this.sessionFactory.getCurrentSession();
-		List<User>  userList = session.createQuery("from CUSTOMER").list();
+		List<User>  userList = session.createQuery("from User").list();
         return userList;
     }
     
@@ -42,7 +41,7 @@ public class userDao {
 //    }
     @Transactional
     public User getUser(String username,String password) {
-    	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+    	Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :username");
     	query.setParameter("username",username);
     	
     	try {
@@ -63,7 +62,7 @@ public class userDao {
 
 	@Transactional
 	public boolean userExists(String username) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+		Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :username");
 		query.setParameter("username",username);
 		return !query.getResultList().isEmpty();
 	}
@@ -80,4 +79,10 @@ public class userDao {
 	            return null; 
 	        }
     	}
+
+	@Transactional
+	public User updateUser(User user) {
+		this.sessionFactory.getCurrentSession().update(user);
+		return user;
+	}
 }

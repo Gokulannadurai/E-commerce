@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.models;
+package com.jtspringproject.models;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,12 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name="CUSTOMER")
-@Table
+@Entity
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(unique = true)

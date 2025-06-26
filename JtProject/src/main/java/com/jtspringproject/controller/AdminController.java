@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.controller;
+package com.jtspringproject.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jtspringproject.JtSpringProject.models.Category;
-import com.jtspringproject.JtSpringProject.models.Product;
-import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.categoryService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.models.Category;
+import com.jtspringproject.models.Product;
+import com.jtspringproject.models.User;
+import com.jtspringproject.services.categoryService;
+import com.jtspringproject.services.productService;
+import com.jtspringproject.services.userService;
 
 @Controller
 @RequestMapping("/admin")
@@ -185,37 +185,9 @@ public class AdminController {
 	
 	@GetMapping("profileDisplay")
 	public String profileDisplay(Model model) {
-		String displayusername,displaypassword,displayemail,displayaddress;
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
-			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
-			
-			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-			stmt.setString(1, username);
-			
-			ResultSet rst = stmt.executeQuery();
-			
-			if(rst.next())
-			{
-			int userid = rst.getInt(1);
-			displayusername = rst.getString(2);
-			displayemail = rst.getString(3);
-			displaypassword = rst.getString(4);
-			displayaddress = rst.getString(5);
-			model.addAttribute("userid",userid);
-			model.addAttribute("username",displayusername);
-			model.addAttribute("email",displayemail);
-			model.addAttribute("password",displaypassword);
-			model.addAttribute("address",displayaddress);
-			}
-		}
-		catch(Exception e)
-		{
-			System.out.println("Exception:"+e);
-		}
-		System.out.println("Hello");
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = this.userService.getUserByUsername(username);
+		model.addAttribute("user", user);
 		return "updateProfile";
 	}
 	
@@ -223,31 +195,24 @@ public class AdminController {
 	public String updateUserProfile(@RequestParam("userid") int userid,@RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("address") String address) 
 	
 	{
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
-			
-			PreparedStatement pst = con.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
-			pst.setString(1, username);
-			pst.setString(2, email);
-			pst.setString(3, password);
-			pst.setString(4, address);
-			pst.setInt(5, userid);
-			int i = pst.executeUpdate();	
-			
-			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+		User user = this.userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setAddress(address);
+
+		if(!password.isEmpty()){
+			user.setPassword(password);
+		}
+		this.userService.updateUser(user);
+
+		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
 		            username,
-		            password,
+		            user.getPassword(), // Use user's current password
 		            SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
-		    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-		}
-		catch(Exception e)
-		{
-			System.out.println("Exception:"+e);
-		}
-		return "redirect:index";
+		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+		
+		return "redirect:/admin/index";
 	}
 
 }

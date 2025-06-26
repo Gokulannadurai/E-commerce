@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject;
+package com.jtspringproject;
  
 import java.util.Properties;
  

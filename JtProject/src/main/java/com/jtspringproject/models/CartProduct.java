@@ -1,11 +1,11 @@
-package com.jtspringproject.JtSpringProject.models;
+package com.jtspringproject.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity(name="CART_PRODUCT")
+@Entity
 public class CartProduct {
 
     @Id
@@ -17,7 +17,7 @@ public class CartProduct {
     private Cart cart;
 
     @ManyToOne
-    @JoinTable(name="product_id")
+    @JoinColumn(name="product_id")
     private Product product;
 
 

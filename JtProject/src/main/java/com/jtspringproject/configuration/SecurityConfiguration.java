@@ -1,4 +1,4 @@
-package com.jtspringproject.JtSpringProject.configuration;
+package com.jtspringproject.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.models.User;
+import com.jtspringproject.services.userService;
 
 @Configuration
 public class SecurityConfiguration {

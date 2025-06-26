@@ -1,8 +1,8 @@
-package com.jtspringproject.JtSpringProject.controller;
+package com.jtspringproject.controller;
 
-import com.jtspringproject.JtSpringProject.models.Cart;
-import com.jtspringproject.JtSpringProject.models.Product;
-import com.jtspringproject.JtSpringProject.models.User;
+import com.jtspringproject.models.Cart;
+import com.jtspringproject.models.Product;
+import com.jtspringproject.models.User;
 
 import java.io.Console;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.jtspringproject.JtSpringProject.services.cartService;
+import com.jtspringproject.services.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,9 +23,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jtspringproject.JtSpringProject.services.userService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.cartService;
+import com.jtspringproject.services.userService;
+import com.jtspringproject.services.productService;
 
 @Controller
 public class UserController{
@@ -123,13 +122,7 @@ public class UserController{
 	public String profileDisplay(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.getUserByUsername(username);
-	
-		if (user != null) {
-			model.addAttribute("user", user);
-	    } else {
-	    	model.addAttribute("msg", "User not found");
-	    } 
-
+		model.addAttribute("user", user);
 		return "updateProfile";
 	}
 	
