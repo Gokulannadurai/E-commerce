@@ -10,13 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jtspringproject.models.Category;
 
+/**
+ * Data Access Object for Category entities.
+ * Handles all database operations related to the Category.
+ */
 @Repository
-public class categoryDao {
-	@Autowired
-	private SessionFactory sessionFactory;
+public class CategoryDao {
+	private final SessionFactory sessionFactory;
 
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
+	@Autowired
+	public CategoryDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Transactional

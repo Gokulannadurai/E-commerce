@@ -5,13 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jtspringproject.dao.productDao;
+import com.jtspringproject.dao.ProductDao;
 import com.jtspringproject.models.Product;
 
+/**
+ * Service layer for handling business logic related to products.
+ */
 @Service
-public class productService {
+public class ProductService implements IProductService {
+	
+	private final ProductDao productDao;
+	
 	@Autowired
-	private productDao productDao;
+	public ProductService(ProductDao productDao) {
+		this.productDao = productDao;
+	}
 	
 	public List<Product> getProducts(){
 		return this.productDao.getProducts();

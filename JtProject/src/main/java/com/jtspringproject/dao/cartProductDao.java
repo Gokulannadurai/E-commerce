@@ -1,6 +1,5 @@
 package com.jtspringproject.dao;
 
-import com.jtspringproject.models.Cart;
 import com.jtspringproject.models.CartProduct;
 import com.jtspringproject.models.Product;
 import org.hibernate.SessionFactory;
@@ -10,13 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Data Access Object for CartProduct entities.
+ * Handles database operations for items within a shopping cart.
+ */
 @Repository
-public class cartProductDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+public class CartProductDao {
+    private final SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
+    @Autowired
+    public CartProductDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Transactional

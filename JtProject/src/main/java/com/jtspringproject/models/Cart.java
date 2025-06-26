@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Model class for the Shopping Cart.
+ */
 @Entity
 public class Cart {
 

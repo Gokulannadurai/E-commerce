@@ -1,9 +1,5 @@
 package com.jtspringproject.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +19,24 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jtspringproject.models.Category;
 import com.jtspringproject.models.Product;
 import com.jtspringproject.models.User;
-import com.jtspringproject.services.categoryService;
-import com.jtspringproject.services.productService;
-import com.jtspringproject.services.userService;
+import com.jtspringproject.services.IUserService;
+import com.jtspringproject.services.ICategoryService;
+import com.jtspringproject.services.IProductService;
 
+/**
+ * Controller for handling administrative tasks and functionalities.
+ * This includes managing products, categories, and viewing customer details.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-	private final userService userService;
-	private final categoryService categoryService;
-	private final productService productService;
+	private final IUserService userService;
+	private final ICategoryService categoryService;
+	private final IProductService productService;
 
 	@Autowired
-	public AdminController(userService userService, categoryService categoryService, productService productService) {
+	public AdminController(IUserService userService, ICategoryService categoryService, IProductService productService) {
 		this.userService = userService;
 		this.categoryService = categoryService;
 		this.productService = productService;
@@ -157,8 +157,7 @@ public class AdminController {
 	@RequestMapping(value = "products/update/{id}",method=RequestMethod.POST)
 	public String updateProduct(@PathVariable("id") int id ,@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage)
 	{
-
-//		this.productService.updateProduct();
+		// TODO: Implement the update logic
 		return "redirect:/admin/products";
 	}
 	

@@ -9,7 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
+/**
+ * Model class for User accounts.
+ */
 @Entity
 public class User {
 
@@ -17,11 +22,15 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
+	@NotBlank(message = "Username is required")
 	@Column(unique = true)
 	private String username;
 	
+	@Email(message = "Email should be valid")
+	@NotBlank(message = "Email is required")
 	private String email;
 	
+	@NotBlank(message = "Password is required")
 	private String password;
 	
 	private String role;

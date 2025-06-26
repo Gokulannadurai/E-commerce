@@ -15,7 +15,7 @@ import com.jtspringproject.models.User;
 
 
 @Repository
-public class userDao {
+public class UserDao {
 	@Autowired
     private SessionFactory sessionFactory;
 	

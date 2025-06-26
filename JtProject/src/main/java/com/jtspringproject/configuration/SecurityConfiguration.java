@@ -12,14 +12,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jtspringproject.models.User;
-import com.jtspringproject.services.userService;
+import com.jtspringproject.services.UserService;
 
+/**
+ * Main Spring Security configuration class.
+ * Configures security filters, authentication, and authorization rules for different parts of the application.
+ */
 @Configuration
 public class SecurityConfiguration {
 	
-	private final userService userService;
+	private final UserService userService;
 
-	public SecurityConfiguration(userService userService) {
+	public SecurityConfiguration(UserService userService) {
 		this.userService = userService;
 	}
 
@@ -61,7 +65,8 @@ public class SecurityConfiguration {
 		SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests(requests -> requests
             		.requestMatchers(new AntPathRequestMatcher("/login"), new AntPathRequestMatcher("/register"), new AntPathRequestMatcher("/newuserregister")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/**")).hasRole("USER"))
+                    .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
+                    .anyRequest().authenticated())
                     .formLogin(login -> login
                             .loginPage("/login")
                             .loginProcessingUrl("/userloginvalidate")

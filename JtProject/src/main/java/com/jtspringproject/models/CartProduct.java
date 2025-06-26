@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Represents an item within a shopping cart, linking a Product
+ * to a Cart.
+ */
 @Entity
 public class CartProduct {
 

@@ -8,16 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jtspringproject.models.Category;
 import com.jtspringproject.models.Product;
 
+/**
+ * Data Access Object for Product entities.
+ * Handles all database operations related to the Product.
+ */
 @Repository
-public class productDao {
-	@Autowired
-    private SessionFactory sessionFactory;
+public class ProductDao {
+	private final SessionFactory sessionFactory;
 	
-	public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
+	@Autowired
+	public ProductDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 	
 	@Transactional
@@ -52,6 +55,13 @@ public class productDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Transactional
+	public List<Product> getProductsWithCategory() {
+		return this.sessionFactory.getCurrentSession()
+			.createQuery("SELECT p FROM Product p JOIN FETCH p.category", Product.class)
+			.list();
 	}
 
 }
