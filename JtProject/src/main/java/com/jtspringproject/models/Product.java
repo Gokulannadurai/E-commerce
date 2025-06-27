@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+/**
+ * Model class for Products.
+ */
 @Entity
 public class Product {
 	@Id

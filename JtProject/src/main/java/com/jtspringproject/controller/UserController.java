@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.jtspringproject.services.cartService;
+import com.jtspringproject.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,17 +23,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jtspringproject.services.userService;
-import com.jtspringproject.services.productService;
+import com.jtspringproject.services.IUserService;
+import com.jtspringproject.services.IProductService;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
 
+/**
+ * Controller for handling user-facing functionalities.
+ * This includes user registration, login, viewing products, and managing user profiles.
+ */
 @Controller
 public class UserController{
 
-	private final userService userService;
-	private final productService productService;
+	private final IUserService userService;
+	private final IProductService productService;
 
 	@Autowired
-	public UserController(userService userService, productService productService) {
+	public UserController(IUserService userService, IProductService productService) {
 		this.userService = userService;
 		this.productService = productService;
 	}
@@ -92,8 +98,13 @@ public class UserController{
 	}
 	
 	@PostMapping("/newuserregister")
-	public ModelAndView newUseRegister(@ModelAttribute User user)
+	public ModelAndView newUseRegister(@Valid @ModelAttribute User user, BindingResult result)
 	{
+		if (result.hasErrors()) {
+			ModelAndView mView = new ModelAndView("register");
+			mView.addObject("msg", "Validation failed! Please check your input.");
+			return mView;
+		}
 		long startTime = System.currentTimeMillis();
 		
 		boolean exists = this.userService.checkUserExists(user.getUsername());
@@ -163,13 +174,4 @@ public class UserController{
 			
 			
 		}
-
-
-//	@GetMapping("carts")
-//	public ModelAndView  getCartDetail()
-//	{
-//		ModelAndView mv= new ModelAndView();
-//		List<Cart>carts = cartService.getCarts();
-//	}
-	  
 }

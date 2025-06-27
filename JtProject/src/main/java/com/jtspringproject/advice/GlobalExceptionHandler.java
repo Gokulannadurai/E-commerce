@@ -9,6 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Global exception handler for the application.
+ * Catches exceptions from all controllers and provides a centralized
+ * point for error handling and response generation.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

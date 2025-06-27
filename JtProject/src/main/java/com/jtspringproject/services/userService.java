@@ -5,22 +5,31 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.jtspringproject.dao.userDao;
+import com.jtspringproject.dao.UserDao;
 import com.jtspringproject.models.User;
 import com.jtspringproject.exceptions.ResourceNotFoundException;
 
 @Service
-public class userService {
+public class UserService implements IUserService {
+
+	private final UserDao userDao;
+	private final PasswordEncoder passwordEncoder;
+
 	@Autowired
-	private userDao userDao;
+	public UserService(UserDao userDao, PasswordEncoder passwordEncoder) {
+		this.userDao = userDao;
+		this.passwordEncoder = passwordEncoder;
+	}
 	
 	public List<User> getUsers(){
 		return this.userDao.getAllUser();
 	}
 	
 	public User addUser(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		try {
 			return this.userDao.saveUser(user);
 		} catch (DataIntegrityViolationException e) {
